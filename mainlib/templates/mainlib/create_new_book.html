@@ -1,0 +1,14 @@
+{% extends 'mainlib/base.html' %}
+
+{% block title %}
+  Create book
+{% endblock %}
+
+{% block body %}
+    <h1>Добавить книгу в список</h1>
+    <form method="POST" action="{% url 'mainlib:create-book' %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Создать</button>
+    </form>
+{% endblock %}

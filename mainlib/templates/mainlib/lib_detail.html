@@ -1,0 +1,35 @@
+{% extends 'mainlib/base.html' %}
+{% load thumbnail %}
+
+{% block title %}
+  Книга #{{ book.tittle }}
+{% endblock %}
+
+{% block body %}
+  <h1>Книга <strong>{{ book.tittle }}</strong></h1>
+  <div>
+  <h3>{{ book.category }}</h3>
+    <div>Описание: <em>{{ book.description }}</em></div>
+    <div>Цена: {{ book.price }}</div>
+    <div>Наличие: {{ book.stock }}</div>
+    <div>Продано штук: {{ book.sale }}</div>
+    <p>Обложка: </p>
+          {% thumbnail book.image "325x240" crop="center" as im %}
+            <img src="{{ im.url }}" alt="House {{ book.tittle }}">
+          {% endthumbnail %}
+    <div>Ссылка на компьютере: {{ book.in_pc_link }}</div>
+    <div>Примерное расположение на полках: {{ book.in_room_place }}</div>
+    <div>Archived: {{ book.archived }}</div>
+
+
+  </div>
+  <div>
+    <a href="{% url 'mainlib:book-update' pk=book.pk %}">Изменить</a>
+  </div>
+{#  <div>#}
+{#    <a href="{% url 'mainlib:achive' pk=book.pk %}">Архивировать (больше не показывать в списке)</a>#}
+{#  </div>#}
+  <div>
+    <a href="{% url 'mainlib:lib-list' %}">Вернуться к списку</a>
+  </div>
+{% endblock %}

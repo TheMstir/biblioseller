@@ -1,0 +1,23 @@
+{% extends 'mainlib/base.html' %}
+{% load thumbnail %}
+
+{% block title %}
+  Lib list
+{% endblock %}
+
+{% block body %}
+  <h1>Книжки в запасах:</h1>
+    {% for book in books %}
+       <strong><p>{{ book.title }}</p></strong>
+        <a href="{% url 'mainlib:book-details' pk=book.pk %}">Детализация</a>
+       <p>Расположение на компьютере: {{ book.in_pc_link }}</p>
+       <p>Цена: {{ book.price }}</p>
+       <p>_______</p>
+
+   {% endfor %}
+
+  <div>
+    <a href="{% url 'mainlib:create-book' %}">Добавить новую книжку</a>
+  </div>
+
+{% endblock %}
