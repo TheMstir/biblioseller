@@ -1,0 +1,24 @@
+{% extends "mainlib/base.html" %}
+
+{% block title %}
+    Изменение книги {{ book.tittle }}
+{% endblock %}
+
+{% block body %}
+
+    <h2>Update product form: {{ book.name }}</h2>
+    <div>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Update</button>
+        </form>
+    </div>
+
+    <div>
+        <p><a href="{% url 'mainlib:book-details' pk=book.pk %}">Вернуться к описанию {{ book.tittle }}</a></p>
+        <p><a href="{% url 'mainlib:lib-list' %}">Перейти к общему списку</a></p>
+{#        <p><a href="{% url 'mainlib:archive' pk=book.pk %}">Заархивировать это</a></p>#}
+    </div>
+
+{% endblock %}

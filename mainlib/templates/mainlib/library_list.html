@@ -1,4 +1,4 @@
-{% extends 'mainlib/base.html' %}
+{% extends "mainlib/index.html" %}
 {% load thumbnail %}
 
 {% block title %}
@@ -9,8 +9,12 @@
   <h1>Книжки в запасах:</h1>
     {% for book in books %}
        <strong><p>{{ book.title }}</p></strong>
-        <a href="{% url 'mainlib:book-details' pk=book.pk %}">Детализация</a>
+        <a href="{% url 'mainlib:book-details' pk=book.pk %}"><h2>{{ book.tittle }}</h2>
+            {% thumbnail book.image "325x240" crop="center" as im %}
+            <img src="{{ im.url }}" alt="House {{ book.tittle }}">
+          {% endthumbnail %}</a>
        <p>Расположение на компьютере: {{ book.in_pc_link }}</p>
+        <p></p>
        <p>Цена: {{ book.price }}</p>
        <p>_______</p>
 

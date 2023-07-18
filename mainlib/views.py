@@ -20,12 +20,13 @@ class LibDetailsView(DetailView):
 
 class LibUpdateView(UpdateView):
     model = Library
-    fields = "tittle", "price", "description", "stock",
+    fields = "tittle", "price", "description", "stock", 'image', 'in_pc_link', 'in_room_place'
+    context_object_name = "book"
     template_name_suffix = "_update_form"
 
     def get_success_url(self):
         return reverse(
-            "mainlib:lib-detail",
+            "mainlib:book-details",
             kwargs={"pk": self.object.pk},
         )
 
@@ -35,7 +36,11 @@ def create_library(request):
         form = LibraryForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('mainlib/library_list.html')  # перенаправление на страницу со списком библиотек
+            return redirect('mainlib:lib-list')  # перенаправление на страницу со списком библиотек
     else:
         form = LibraryForm()
     return render(request, 'mainlib/create_new_book.html', {'form': form})
+
+
+def index(request):
+    return render(request, 'mainlib/main.html', {})

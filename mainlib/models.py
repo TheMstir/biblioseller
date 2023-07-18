@@ -1,15 +1,16 @@
 from django.db import models
 
+
 def image_directory_path(instance, filename):
     """функция для направления подгружаемых картинок в папку"""
-    return f"books/{instance.category}/{filename}"
+    return f"books/{filename}"
 
 
 class Category(models.Model):
     """
     Модель для категоризации списка книг
     """
-    title = models.CharField(max_length=150)
+    tittle = models.CharField(max_length=150)
 
 
 class Library(models.Model):
@@ -23,7 +24,7 @@ class Library(models.Model):
 
     tittle = models.CharField(max_length=100, verbose_name='название')
     description = models.TextField(null=False, blank=True, verbose_name='описание')
-    image = models.ImageField(upload_to=image_directory_path, default='', blank=True, verbose_name='изобрадение')
+    image = models.ImageField(upload_to='cover/', default='', blank=True, verbose_name='изображение')
     stock = models.IntegerField(default=0, null=False, verbose_name="запасы")
     sale = models.IntegerField(default=0, null=True, verbose_name="продано")
     price = models.DecimalField(default=0, max_digits=8, decimal_places=2, null=False, verbose_name="цена")
