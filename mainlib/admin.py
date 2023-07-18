@@ -10,6 +10,7 @@ class CategoryAdmin(admin.ModelAdmin):
 class LibraryAdmin(admin.ModelAdmin):
     list_display = ["tittle", "description", "stock", "price", "sale", "in_pc_link"]
 
+
 @admin.register(LibImages)
 class LibraryImageAdmin(admin.ModelAdmin):
     list_display = ["name", "product", "image"]

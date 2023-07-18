@@ -10,7 +10,8 @@
   <div>
   <h3>{{ book.category }}</h3>
     <div>Описание: <em>{{ book.description }}</em></div>
-    <div>Цена: {{ book.price }}</div>
+    <br>  <div>Нюансы: {{book.peculiarities }}</div>
+    <br><div>Цена: <h3>{{ book.price }}</h3></div>
     <div>Наличие: {{ book.stock }}</div>
     <div>Продано штук: {{ book.sale }}</div>
     <p>Обложка: </p>
@@ -20,6 +21,14 @@
     <div>Ссылка на компьютере: {{ book.in_pc_link }}</div>
     <div>Примерное расположение на полках: {{ book.in_room_place }}</div>
     <div>Archived: {{ book.archived }}</div>
+
+    {% for image in images %}
+      {{ image.name }}
+      {{ image. }}
+      <img src="{{ image.image.url }}" alt="изображение">
+    {% endfor %}
+
+
 
 
   </div>

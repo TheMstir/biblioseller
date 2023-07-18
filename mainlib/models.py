@@ -19,14 +19,22 @@ class Category(models.Model):
 class Library(models.Model):
     """
     Модель для хранения базы различных книжек
-
+    tittle: название
+    description: опиисание
+    peculiarities: для хранения нюансов связанных с изданием
+    image: обложка (остальные фото связываются через вторую модель)
+    stock: копии в запасе
+    price: цена
     sale: учитывает количество проданных копий, для формирования списка популярности
+    in_pc_link: ссылка на компьютере
+    in_room_place: Где лежат копии в физическом хранилище
 
     archived: применяется для того чтобы временно убрать книжку из отображения
     """
 
     tittle = models.CharField(max_length=100, verbose_name='название')
     description = models.TextField(null=False, blank=True, verbose_name='описание')
+    peculiarities = models.TextField(null=False, blank=True, verbose_name='нюансы')
     image = models.ImageField(upload_to='cover/', default='', blank=True, verbose_name='изображение')
     stock = models.IntegerField(default=0, null=False, verbose_name="запасы")
     sale = models.IntegerField(default=0, null=True, verbose_name="продано")

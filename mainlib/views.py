@@ -6,9 +6,18 @@ from .forms import LibraryForm
 
 
 class LibraryListView(ListView):
+    """Представление для просмотра всех книг списком"""
     template_name = 'mainlib/library_list.html'
     context_object_name = 'books'
     queryset = Library.objects.filter(archived=False)
+
+    def get_queryset(self):
+        """Форма поиска"""
+        queryset = super().get_queryset()
+        q = self.request.GET.get('q')
+        if q:
+            queryset = queryset.filter(title__icontains=q)
+        return queryset
 
 
 class LibDetailsView(DetailView):
@@ -16,6 +25,12 @@ class LibDetailsView(DetailView):
     template_name = "mainlib/lib_detail.html"
     model = Library
     context_object_name = "book"
+
+    def get_context_data(self, **kwargs):
+        """Добавляет возможность подключения разных дополнительных изображений"""
+        context = super().get_context_data(**kwargs)
+        context['images'] = self.object.images.all()
+        return context
 
 
 class LibUpdateView(UpdateView):
