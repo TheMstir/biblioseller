@@ -12,6 +12,9 @@ class Category(models.Model):
     """
     tittle = models.CharField(max_length=150)
 
+    def __str__(self):
+        return self.tittle
+
 
 class Library(models.Model):
     """
