@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView, UpdateView
 from .models import Library, Money
 from .forms import LibraryForm, LibImagesForm, MoneyForm
 from datetime import datetime, timedelta
+from django.core.paginator import Paginator
 
 
 class LibraryListView(ListView):
@@ -11,6 +12,7 @@ class LibraryListView(ListView):
     template_name = 'mainlib/library_list.html'
     context_object_name = 'books'
     queryset = Library.objects.filter(archived=False)
+    paginate_by = 20  # количество объектов на странице
 
     def get_queryset(self):
         """Форма поиска"""
@@ -19,6 +21,14 @@ class LibraryListView(ListView):
         if q:
             queryset = queryset.filter(tittle__icontains=q)
         return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        paginator = Paginator(context['books'], self.paginate_by)
+        page_number = self.request.GET.get('page')
+        page_obj = paginator.get_page(page_number)
+        context['page_obj'] = page_obj
+        return context
 
 
 class LibDetailsView(DetailView):

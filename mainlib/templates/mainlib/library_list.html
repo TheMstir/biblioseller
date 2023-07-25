@@ -9,29 +9,50 @@
   <div>
     <a href="{% url 'mainlib:create-book' %}">Добавить новую книжку</a>
   </div>
+    <a href="{% url 'mainlib:index' %}">Назад</a>
+    <br>
     <h3>Форма поиска</h3>
     <form method="get">
       <input type="text" name="q" placeholder="Поиск">
       <button type="submit">Найти</button>
     </form>
-  <h1>Книжки в запасах:</h1>
-    {% for book in books %}
-       <strong><p>{{ book.title }}</p></strong>
-        <a href="{% url 'mainlib:book-details' pk=book.pk %}"><h2>{{ book.tittle }}</h2>
-            {% thumbnail book.image "100x100" crop="center" as im %}
+{% for book in page_obj %}
+    <strong><p>{{ book.title }}</p></strong>
+    <a href="{% url 'mainlib:book-details' pk=book.pk %}">
+        <h2>{{ book.tittle }}</h2>
+        <p>{% thumbnail book.image "220x220" crop="center" as im %}
             <img src="{{ im.url }}" alt="House {{ book.tittle }}">
-          {% endthumbnail %}</a>
-       <p>Расположение на компьютере: {{ book.in_pc_link }}</p>
-        <p></p>
-       <p>Цена: {{ book.price }}</p>
-       <p>_______</p>
+        {% endthumbnail %}</p>
+    </a>
+    <p>Расположение на компьютере: {{ book.in_pc_link }}</p>
+    <p></p>
+    <p>Цена: {{ book.price }}</p>
+    <p>_______</p>
+{% endfor %}
 
-   {% endfor %}
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; первая</a>
+            <a href="?page={{ page_obj.previous_page_number }}">&lsaquo; предыдущая</a>
+        {% endif %}
+
+        <span class="current-page">
+            Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">следующая &rsaquo;</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">последняя &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
 
   <div>
+      <br>
     <a href="{% url 'mainlib:create-book' %}">Добавить новую книжку</a>
       <br>
-    <a href="{% url 'mainlib:index' %}">Назад</a>
   </div>
 
 {% endblock %}

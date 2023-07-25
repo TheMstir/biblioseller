@@ -1,4 +1,4 @@
-{% extends 'mainlib/base.html' %}
+{% extends 'mainlib/index.html' %}
 {% load thumbnail %}
 
 {% block title %}
@@ -8,6 +8,9 @@
 {% block body %}
   <h1>Книга <strong>{{ book.tittle }}</strong></h1>
   <div>
+
+  <div><a href="{% url 'mainlib:lib-list' %}">Вернуться к списку</a></div>
+
   <h3>{{ book.category }}</h3>
     <div>Описание: <em>{{ book.description }}</em></div>
     <br>  <div>Нюансы: {{book.peculiarities }}</div>
@@ -22,15 +25,7 @@
     <div>Примерное расположение на полках: {{ book.in_room_place }}</div>
     <div>Archived: {{ book.archived }}</div>
     <div><a href="{% url 'mainlib:add_image' pk=book.pk %}">Добавить изображение</a></div>
-
-    {% for image in images %}
-      {{ image.name }}
-      {% thumbnail image.image "325x240" crop="center" as im %}
-            <img src="{{ im.url }}" alt="изображение">
-      {% endthumbnail %}
-    {% endfor %}
-
-
+    <br>
 
   </div>
   <div>
@@ -39,7 +34,17 @@
 {#  <div>#}
 {#    <a href="{% url 'mainlib:achive' pk=book.pk %}">Архивировать (больше не показывать в списке)</a>#}
 {#  </div>#}
-  <div>
-    <a href="{% url 'mainlib:lib-list' %}">Вернуться к списку</a>
-  </div>
+
+
+    {% for image in images %}
+      {{ image.name }}
+      {% thumbnail image.image "325x240" crop="center" as im %}
+            <img src="{{ im.url }}" alt="изображение">
+      {% endthumbnail %}
+    <div> * </div>
+    {% endfor %}
+
+
+
+
 {% endblock %}
