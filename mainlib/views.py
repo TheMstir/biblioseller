@@ -17,7 +17,7 @@ class LibraryListView(ListView):
         queryset = super().get_queryset()
         q = self.request.GET.get('q')
         if q:
-            queryset = queryset.filter(title__icontains=q)
+            queryset = queryset.filter(tittle__icontains=q)
         return queryset
 
 
@@ -67,7 +67,7 @@ def add_image(request, pk):
             image = form.save(commit=False)
             image.product = book
             image.save()
-            return redirect('mainlib:book-detail', pk=book.pk)
+            return redirect('mainlib:book-details', pk=book.pk)
     else:
         form = LibImagesForm()
     return render(request, 'mainlib/add_image.html', {'form': form})
@@ -78,16 +78,23 @@ def add_money(request):
         form = MoneyForm(request.POST)
         if form.is_valid():
             money = form.save(commit=False)
+            money.mounth += Money.objects.last().mounth + money.now
             money.save()
             # Обнуляем mounth каждые 30 дней
             last_month = Money.objects.last().mounth
             if last_month + 30 <= datetime.now().day:
+                # Только сначала доход месяца перекидываем в общий
+                money.all += money.mounth
                 Money.objects.all().update(mounth=0)
-            return redirect('mainlib:main')
+
+            return redirect('mainlib:index')
     else:
         form = MoneyForm()
-    return render(request, 'add_money.html', {'form': form})
+    return render(request, 'mainlib/add_money.html', {'form': form})
 
 
 def index(request):
-    return render(request, 'mainlib/main.html', {})
+    money = Money.objects.last()  # получаем первый объект из модели Money
+    context = {'money': money}
+
+    return render(request, 'mainlib/main.html', context)

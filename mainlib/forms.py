@@ -1,11 +1,21 @@
 from django import forms
 from .models import Library, LibImages, Money
 
+
 class MoneyForm(forms.ModelForm):
     """форма добавления цифр на экран общей суммы"""
     class Meta:
         model = Money
-        fields = ('mounth', 'all')
+        fields = ('now', )
+        widgets = {
+            'now': forms.NumberInput(),
+             }
+
+        def __init__(self, *args, **kwargs):
+            super(Money, self).__init__(*args, **kwargs)
+            for field in self.fields.values():
+                field.required = False
+
 
 
 class LibImagesForm(forms.ModelForm):
