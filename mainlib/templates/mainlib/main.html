@@ -8,6 +8,8 @@
 {% block body %}
     <a href="{% url 'admin:index' %}"><h1>Администрирование</h1></a>
     <a href="{% url 'mainlib:lib-list' %}"><p align="center" style="color:#ff0099; font-size:30px"><h2>Общий список книг</h2></p></a>
-    <div>За месяц заработано: %добавить ссылку на какое-то подобие учета%</div>
-    <div>Добавить сумму: </div>
+    <div>За месяц заработано: %Подключить из мони% %добавить ссылку на какое-то подобие учета%</div>
+    {% include 'mainlib/add_money.html' %}
+    </form>
+
 {% endblock %}
