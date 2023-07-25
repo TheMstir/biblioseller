@@ -1,5 +1,18 @@
 from django import forms
-from .models import Library
+from .models import Library, LibImages, Money
+
+class MoneyForm(forms.ModelForm):
+    """форма добавления цифр на экран общей суммы"""
+    class Meta:
+        model = Money
+        fields = ('mounth', 'all')
+
+
+class LibImagesForm(forms.ModelForm):
+    """Форма добавления дополнительного изображения"""
+    class Meta:
+        model = LibImages
+        fields = ('name', 'image')
 
 
 class LibraryForm(forms.ModelForm):

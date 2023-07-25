@@ -98,3 +98,17 @@ class LibTags(models.Model):
 
 
 
+class Money(models.Model):
+    """
+    Модель для хранения денег
+    """
+
+    mounth = models.IntegerField()
+    all = models.IntegerField()
+
+    def __str__(self):
+        return self.all
+
+
+
+

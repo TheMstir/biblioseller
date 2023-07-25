@@ -21,13 +21,14 @@
     <div>Ссылка на компьютере: {{ book.in_pc_link }}</div>
     <div>Примерное расположение на полках: {{ book.in_room_place }}</div>
     <div>Archived: {{ book.archived }}</div>
+    <div><a href="{% url 'mainlib:add_image' pk=book.pk %}">Добавить изображение</a></div>
 
     {% for image in images %}
       {{ image.name }}
-      {{ image. }}
-      <img src="{{ image.image.url }}" alt="изображение">
+      {% thumbnail image.image "325x240" crop="center" as im %}
+            <img src="{{ im.url }}" alt="изображение">
+      {% endthumbnail %}
     {% endfor %}
-
 
 
 
