@@ -6,7 +6,8 @@ from .views import (
     LibDetailsView,
     index,
     add_image,
-    add_money)
+    add_money,
+    delete_image_view)
 
 app_name = "mainlib"
 
@@ -18,5 +19,6 @@ urlpatterns = [
     path('list/<int:pk>/update/', LibUpdateView.as_view(), name='book-update'),
     path('book/<int:pk>/add_image/', add_image, name='add_image'),
     path('add_money/', add_money, name='add_money'),
+    path('delete_image/', delete_image_view, name='delete_image'),
 ]
 

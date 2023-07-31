@@ -27,6 +27,7 @@
     <div><a href="{% url 'mainlib:add_image' pk=book.pk %}">Добавить изображение</a></div>
     <br>
 
+
   </div>
   <div>
     <a href="{% url 'mainlib:book-update' pk=book.pk %}">Изменить</a>
@@ -35,15 +36,40 @@
 {#    <a href="{% url 'mainlib:achive' pk=book.pk %}">Архивировать (больше не показывать в списке)</a>#}
 {#  </div>#}
 
+    {% if images %}
+        {% for image in images %}
+          {{ image.name }}
+          {% thumbnail image.image "325x240" crop="center" as im %}
+                <img src="{{ im.url }}" alt="изображение">
+          {% endthumbnail %}
+             <button class="delete-image-button" data-image-id="{{ image.id }}">Удалить</button>
+        <div> * </div>
+        {% endfor %}
+    {% else %}
+        <p>Изображений нет.</p>
+    {% endif %}
 
-    {% for image in images %}
-      {{ image.name }}
-      {% thumbnail image.image "325x240" crop="center" as im %}
-            <img src="{{ im.url }}" alt="изображение">
-      {% endthumbnail %}
-    <div> * </div>
-    {% endfor %}
-
+{% block js %}
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+  $(document).ready(function() {
+    $('.delete-image-button').click(function() {
+      var imageId = $(this).data('image-id');
+      $.ajax({
+        url: '/delete_image/',
+        type: 'POST',
+        data: { 'image_id': imageId },
+        success: function() {
+          $('.image-container[data-image-id=' + imageId + ']').remove();
+          setTimeout(function() {
+            location.reload();
+          }, 500);
+        }
+      });
+    });
+  });
+  </script>
+{% endblock %}
 
 
 

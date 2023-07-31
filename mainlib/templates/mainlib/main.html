@@ -6,7 +6,8 @@
 {% endblock %}
 
 {% block body %}
-    <a href="{% url 'admin:index' %}"><h1>Администрирование</h1></a>
+    <h1>Учет книжной полки</h1>
+    <a href="{% url 'admin:index' %}"><h3>Администрирование</h3></a>
     <a href="{% url 'mainlib:lib-list' %}"><p align="center" style="color:#ff0099; font-size:30px"><h2>Общий список книг</h2></p></a>
     <div>За месяц заработано: {{ money.mounth }} рублей</div>
     <div>%добавить ссылку на какое-то подобие учета%</div>

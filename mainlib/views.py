@@ -1,10 +1,12 @@
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.views.generic import ListView, DetailView, UpdateView
-from .models import Library, Money
+from .models import Library, Money, LibImages
 from .forms import LibraryForm, LibImagesForm, MoneyForm
 from datetime import datetime, timedelta
 from django.core.paginator import Paginator
+from django.views.decorators.csrf import csrf_exempt
 
 
 class LibraryListView(ListView):
@@ -59,7 +61,7 @@ class LibUpdateView(UpdateView):
 
 def create_library(request):
     if request.method == 'POST':
-        form = LibraryForm(request.POST)
+        form = LibraryForm(request.POST, request.FILES)
         if form.is_valid():
             form.save()
             return redirect('mainlib:lib-list')  # перенаправление на страницу со списком библиотек
@@ -108,3 +110,15 @@ def index(request):
     context = {'money': money}
 
     return render(request, 'mainlib/main.html', context)
+
+@csrf_exempt
+def delete_image_view(request):
+    if request.method == 'POST':
+        image_id = request.POST.get('image_id')
+        try:
+            image = LibImages.objects.get(id=image_id)
+            image.delete()
+            return JsonResponse({'success': True})
+        except LibImages.DoesNotExist:
+            pass
+    return JsonResponse({'success': False})
