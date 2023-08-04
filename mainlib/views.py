@@ -38,12 +38,29 @@ class LibDetailsView(DetailView):
     template_name = "mainlib/lib_detail.html"
     model = Library
     context_object_name = "book"
+    success_url = '/list/'
 
     def get_context_data(self, **kwargs):
         """Добавляет возможность подключения разных дополнительных изображений"""
         context = super().get_context_data(**kwargs)
+        self.object = self.get_object()
         context['images'] = self.object.images.all()
+        context['form'] = LibImagesForm()
         return context
+
+    def form_valid(self, form):
+        self.object = self.get_object()
+        form.instance.library = self.object
+        form.save()
+        return super().form_valid(form)
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().get(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return self.dispatch(request, *args, **kwargs)
 
 
 class LibUpdateView(UpdateView):

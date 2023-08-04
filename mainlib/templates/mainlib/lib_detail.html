@@ -21,17 +21,17 @@
           {% thumbnail book.image "325x240" crop="center" as im %}
             <img src="{{ im.url }}" alt="House {{ book.tittle }}">
           {% endthumbnail %}
-    <div>Ссылка на компьютере: {{ book.in_pc_link }}</div>
+      <div>_______</div>
+    <div>Ссылка на компьютере: <link>{{ book.in_pc_link }}</link></div>
     <div>Примерное расположение на полках: {{ book.in_room_place }}</div>
     <div>Archived: {{ book.archived }}</div>
-    <div><a href="{% url 'mainlib:add_image' pk=book.pk %}">Добавить изображение</a></div>
-    <br>
+      <br>
+    <div><a href="{% url 'mainlib:book-update' pk=book.pk %}">Изменить книгу</a>
+    <a href="{% url 'mainlib:add_image' pk=book.pk %}"><h3>Добавить изображение</h3></a></div>
 
 
   </div>
-  <div>
-    <a href="{% url 'mainlib:book-update' pk=book.pk %}">Изменить</a>
-  </div>
+
 {#  <div>#}
 {#    <a href="{% url 'mainlib:achive' pk=book.pk %}">Архивировать (больше не показывать в списке)</a>#}
 {#  </div>#}
@@ -41,9 +41,9 @@
           {{ image.name }}
           {% thumbnail image.image "325x240" crop="center" as im %}
                 <img src="{{ im.url }}" alt="изображение">
+            <p class="center"><a href="{{ image.image.url }}">увеличить</a></p>
           {% endthumbnail %}
-             <button class="delete-image-button" data-image-id="{{ image.id }}">Удалить</button>
-        <div> * </div>
+            <p class="center"><button class="delete-image-button" data-image-id="{{ image.id }}">Удалить</button></p>
         {% endfor %}
     {% else %}
         <p>Изображений нет.</p>

@@ -8,14 +8,16 @@
 {% block body %}
   <div>
     <a href="{% url 'mainlib:create-book' %}">Добавить новую книжку</a>
-  </div>
+      ....
     <a href="{% url 'mainlib:index' %}">Назад</a>
+  </div>
     <br>
     <h3>Форма поиска</h3>
     <form method="get">
       <input type="text" name="q" placeholder="Поиск">
       <button type="submit">Найти</button>
     </form>
+<h2><p class="center">Книжки</p></h2>
 {% for book in page_obj %}
     <strong><p>{{ book.title }}</p></strong>
     <a href="{% url 'mainlib:book-details' pk=book.pk %}">
